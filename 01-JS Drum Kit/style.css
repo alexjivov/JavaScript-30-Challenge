@@ -18,6 +18,8 @@ body,html {
   justify-content: center;
 }
 
+/* button transitions for onclick */
+
 .key {
   border: .4rem solid black;
   border-radius: .5rem;

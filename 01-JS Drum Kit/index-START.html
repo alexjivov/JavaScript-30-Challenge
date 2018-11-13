@@ -7,7 +7,9 @@
 </head>
 <body>
 
-
+<!-- Key codes associated with each key on the keyboard
+When you hit '65' it will play the corresponding audio element (i.e. clap)
+Data attributes are NOT a standard attribute used commomnly - it was made up normally -->
   <div class="keys">
     <div data-key="65" class="key">
       <kbd>A</kbd>
@@ -58,6 +60,15 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+// Listen to a key down event and run  the keydown event (e) function - in HTML JS 
+window.addEventListener('keydown', function (e) {
+  // Is there an audio element on the page that has a data-key of "x"?
+  // USE BACKTICKS for an ES6 Template String ${}
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`); // if 'null' there is no audio associated with the key
+  if(!audio) return; // Stop the function from running
+
+  audio.play();
+});
 
 </script>
 
