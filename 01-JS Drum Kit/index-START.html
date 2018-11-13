@@ -60,16 +60,31 @@ Data attributes are NOT a standard attribute used commomnly - it was made up nor
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-// Listen to a key down event and run  the keydown event (e) function - in HTML JS 
-window.addEventListener('keydown', function (e) {
-  // Is there an audio element on the page that has a data-key of "x"?
+
+function playSound (e) {
+     // Is there an audio element on the page that has a data-key of "x"?
   // USE BACKTICKS for an ES6 Template String ${}
-  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`); // if 'null' there is no audio associated with the key
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+  const key = document.querySelector(`.key[data-key="${e.keyCode}"]`); // links to divs to play CSS animations
+   // if 'null' there is no audio associated with the key
   if(!audio) return; // Stop the function from running
-
+  audio.currentTime = 0; // rewind to the start
   audio.play();
-});
+  key.classList.add('playing'); // Adds css transition element from .key css
 
+}
+
+function removeTransition(e) {
+  if (e.propertyName !== 'transform') return; // skip if it is not a transform
+  this.classList.remove('playing');
+}
+
+const keys = document.querySelectorAll('.key'); // Selects EVERY key element in an array
+// Add event listener to each key to listen for the transition end
+keys.forEach(key => key.addEventListener('transitionend', removeTransition)); // When a transition is ending we will remove it
+
+// Listen to a key down event and run  the keydown event (e) function - in HTML JS 
+window.addEventListener('keydown', playSound);
 </script>
 
 
