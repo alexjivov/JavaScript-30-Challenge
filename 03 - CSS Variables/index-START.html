@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="style.css" />
   <title>Scoped CSS Variables and JS</title>
 </head>
+
 <body>
   <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
 
+
+  <!--All of the base ranges are defined in HTML and then changed in the JS-->
   <div class="controls">
     <label for="spacing">Spacing:</label>
     <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
@@ -20,32 +25,25 @@
 
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
-  <style>
-
-    /*
-      misc styles, nothing to do with CSS variables
-    */
-
-    body {
-      text-align: center;
-      background: #193549;
-      color: white;
-      font-family: 'helvetica neue', sans-serif;
-      font-weight: 100;
-      font-size: 50px;
-    }
-
-    .controls {
-      margin-bottom: 50px;
-    }
-
-    input {
-      width: 100px;
-    }
-  </style>
-
   <script>
+    // Query Selector 'All' selects multiple items in a node list - NOT an array
+    // Array has methods (map,reduce) specifically for dealing with arrays whereas node list has its own set 
+    const inputs = document.querySelectorAll('.controls input');
+
+    function handleUpdate() {
+      // Need to know the suffix of the values you are trying to grab (i.e. 'px') - can add a data attribute onto html element if needed
+      // || '' is for data sets that dont have the sizing suffix
+      const suffix = this.dataset.sizing || '';
+      // Use template literals to select ALL of the root css variables 
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+    }
+    // Uses an arrow function for cleanliness on event listener 
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    // Actually makes the values change as you move the sliders
+    // Mousemove allows the value to change without having to let go of the mouse
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
   </script>
 
 </body>
+
 </html>
