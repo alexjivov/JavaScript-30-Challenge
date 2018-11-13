@@ -43,4 +43,12 @@ html {
     background: black;
     position: absolute;
     top: 50%;
+    /* transform changes where the hand pivots on the X-axis */
+    transform-origin: 100%;
+    /* transform changes where the hand pivots on the Y axis */
+    transform: rotate(90deg);
+    /* transitions the rotation of the hand around */
+    transition: all 0.05s;
+    /* Gives the 'ticking' of the clock - allows you to customize HOW the transition looks */
+    transition-timing-function: cubic-bezier(0.1,2.7,0.58,1);
   }
