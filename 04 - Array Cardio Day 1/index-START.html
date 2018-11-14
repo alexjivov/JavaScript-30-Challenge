@@ -31,28 +31,99 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    // Loops over the inventors and see which are born in the target date
+    // DONE IN ES6 ARROW FUNCTION 
+    const fifteen = inventors.filter(inventor => (inventor.year >= 1500 && inventor.year <= 1600))
+  
+    //Console logs data as a table !!!!!
+    console.table(fifteen);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
+    // Gives a new array of the same length as the items you put in - 'stamps' existing data with your filters
+    const fullNames = inventors.map(inventor =>  `${inventor.first} ${inventor.last}`);
+    console.table(fullNames);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    const ordered = inventors.sort(function(firstPerson, secondPerson) {
+      if(firstPerson.year > secondPerson.year) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+    console.table(ordered)
+
+    //ES6 Shortened Function
+    const shortOrdered = inventors.sort((a,b) => a.year > b.year ? 1: -1);
+    console.table(shortOrdered)
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    // Allows you to 'build' filters on each person
+    const totalYears = inventors.reduce((total, inventor) => {
+      return total + (inventor.passed - inventor.year)
+    }, 0 //Makes a total from which the math can be done from
+    );
+    console.table(totalYears)
+
+
 
     // 5. Sort the inventors by years lived
+      const oldest = inventors.sort(function(a, b) {
+        const lastPerson = a.passed - a.year;
+        const nextPerson = b.passed - b.year;
+        //ES6 short version
+        return lastPerson > nextPerson ? -1: 1;
+
+        // Long version
+        // if(lastPerson > nextPerson) {
+        //   return -1;
+        // } else {
+        //   return 1;
+        // }
+      });
+      console.table(oldest)
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+    // Need to get the DOM elements out of the page 
+    // Need to find all the divs for the boulevards IN browser console log
 
+    // const category = document.querySelector('.mw-category');
+    // // [...] ES6 Spread to convert Node List into an arrow
+    // const links = [...category.querySelectorAll('a')]; // get list of links
+    // // convert links to list of names by using map method
+    // // This will give you a NODE LIST WHICH DOES NOT HAVE THE MAP FUNCTION
+    // // Need to change Node List into an array
+    // const de = links
+    //         .map(link => link.textContent)
+    //         .filter(streetName => streetName.includes('de');
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
-
+    const alpha = people.sort((lastOne, nextOne) => {
+      // all names have a comma and a space so you can hook onto that to split that 
+      const [alast, afirst] = lastOne.split(', ');
+      const [blast, bfirst] = nextOne.split(', ');
+      return alast > blast ? 1: -1;
+    });
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    const transportation = data.reduce(function(obj,item) {
+      if(!obj[item]) {
+        obj[item] = 0; // sets no object to 0 so you can increment it 
+      }
+      obj[item]++; //increments and counts the items up
+      return obj;
+
+    }, {
+      //Blank object here to loop over in the funcvtion
+    })
+
 
   </script>
 </body>
