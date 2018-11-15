@@ -15,7 +15,55 @@
     </ul>
   </form>
 <script>
+  // Just a cities.json file on github 
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+// empty array for cities to go into 
+const cities = [];
+// fetch is a new way to run a callback - returns a promise 
+// data that comes back from the fetch initially doesn't know what data it is (html, img, music, etc)
+// JSON parse doesn't work - you have to convert it with the .json() method
+fetch(endpoint)
+.then(blob => blob.json())
+// you have to assign the data to a const and spread it INTO a function (...)
+.then(data => cities.push(...data))
+
+//function for the suggestions when you type into the search bar
+function findMatches(wordsToMatch, cities) {
+  return cities.filter(place => {
+    //here we need to figure out if the city or state matches what was searched
+    // 'gi' means it searches globally and is case insensitive
+    const regex = new RegExp(wordsToMatch, 'gi')
+    return place.city.match(regex) || place.state.match(regex)
+  });
+}
+
+// displays suggestions in browser function
+function displayMatches() {
+  const matchArray = findMatches(this.value, cities);
+  // this returns an array - need to convert to 1 string (fixed with join)
+  const html = matchArray.map(place => {
+    // highlight the text put in by the user in the suggestions
+    const regex = new RegExp(this.value, 'gi');
+    const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
+    const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);
+    return `
+    <li>
+    <span class="name">${cityName}, ${stateName}</span>
+    <span class="population">${place.population}</span>
+    </li>
+    `;
+  }).join('');
+  // render the function
+  suggestions.innerHTML = html;
+}
+
+//browser hooks
+const searchInput = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
+
+//event listeners
+searchInput.addEventListener('change', displayMatches);
+searchInput.addEventListener('keyup', displayMatches);
 
 </script>
   </body>
