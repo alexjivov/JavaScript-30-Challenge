@@ -19,6 +19,7 @@ html {
     overflow: hidden;
     /* makes panels display side by side - has a course on flex at flexbox.io */
     display: flex; 
+
   }
 
   .panel {
