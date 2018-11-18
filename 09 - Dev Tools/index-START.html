@@ -11,6 +11,7 @@
   <script>
     const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
 
+    // go into inspect and right click on the element and go to 'break on' => attribute modifications
     function makeGreen() {
       const p = document.querySelector('p');
       p.style.color = '#BADA55';
@@ -20,26 +21,67 @@
     // Regular
 
     // Interpolated
+    // Not really needed now that ES6 exists
+    console.log('Hello I am a %s string!', 'BOO');
+    console.log('Hello I am `${var}`!');
 
     // Styled
+    // Style your console logs
+    console.log('%c I am some great text', 'font-size: 50px; background: yellow; text-shadow: 5px 5px 0 red;');
 
     // warning!
+    console.warn('OH NO');
 
     // Error :|
+    console.error('Busted!');
 
     // Info
+    console.info('Generic fun fact');
 
     // Testing
+    // Check if something is true, will NOT fire if it is false
+    const p = document.querySelector('p');
+    console.assert(p.classList.contains('ouch'), 'That is wrong!');
 
     // clearing
+    // console.clear();
 
     // Viewing DOM Elements
+    console.log(p);
+    console.dir(p);
+    
 
     // Grouping together
+    dogs.forEach(dog => {
+      // can also do console.groupCollapsed for a smaller table
+      console.group(`${dog.name} `);
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.groupEnd(`${dog.name}`);
+    });
 
     // counting
+    // Counts how many times you ran a log
+    console.count('Alex');
+    console.count('Alex');
+    console.count('Alex');
+    console.count('Alex');
+    console.count('Alex');
+    console.count('Alex');
+    console.count('Alex');
+    console.count('Alex');
+    console.count('Alex');
+
 
     // timing
+    console.time('fetching data');
+    fetch('https:/api.github.com/users/alexjivov')
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('fetching data');
+        console.log(data);
+
+      });
 
   </script>
 </body>
