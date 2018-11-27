@@ -11,7 +11,41 @@
   </div>
 
 <script>
+  // global variable that lives in the browser
+  // only available in firefox or Chrome
   window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  const recognition = new SpeechRecognition();
+  // populates characters as you speak
+  recognition.interimResults = true;
+
+  let p = document.createElement('p');
+  const words = document.querySelector('.words');
+  words.appendChild(p);
+
+  recognition.addEventListener('result', e => {
+    // not an array by default - need to convert
+    const transcript = Array.from(e.results)
+      .map(result => result[0])
+      .map(result => result.transcript)
+      .join('')
+
+      // transcript of speech goes into the DOM
+      p.textContent = transcript;
+      if(e.results[0].isFinal) {
+        p = document.createElement('p');
+        words.appendChild(p);
+      }
+      
+      // can hook an API on to listen for keywords (i.e. the weather).
+      if(transcript.includes('get the weather')) {
+        console.log('Get the weather');
+      }
+
+
+  });
+
+  recognition.start();
 
 
 </script>
