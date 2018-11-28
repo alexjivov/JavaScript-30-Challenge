@@ -16,7 +16,6 @@
         <li><a href="">Contact Us</a></li>
       </ul>
     </nav>
-
     <div class="wrapper">
       <p>Lorem ipsum dolor sit amet, <a href="">consectetur</a> adipisicing elit. Est <a href="">explicabo</a> unde natus necessitatibus esse obcaecati distinctio, aut itaque, qui vitae!</p>
       <p>Aspernatur sapiente quae sint <a href="">soluta</a> modi, atque praesentium laborum pariatur earum <a href="">quaerat</a> cupiditate consequuntur facilis ullam dignissimos, aperiam quam veniam.</p>
@@ -26,7 +25,38 @@
     </div>
 
   <script>
-    // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+    // need to get triggers - things that hover and need to be selected
+    const triggers = document.querySelectorAll('a');
+    // create the highlight class for the links
+    const highlight = document.createElement('span');
+    highlight.classList.add('highlight');
+    document.body.append(highlight);
+
+    function highlightLink() {
+      // need to find height, width, x and y of the highliughts
+      // use getBoundingClientRect
+      const linkCoords = this.getBoundingClientRect();
+      console.log(linkCoords);
+      // make your own coordinates so scroll shifts properly
+      const coords = {
+        width: linkCoords.width,
+        height: linkCoords.height,
+        top: linkCoords.top - window.scrollY,
+        left: linkCoords.left - window.ScrollX  
+        };
+        
+      //dynamically applies the style 
+      highlight.style.width = `${linkCoords.width}px`;
+      highlight.style.height = `${linkCoords.height}px`;
+
+      // need to animate left and right values with transform property
+      highlight.style.transform= `translate(${linkCoords.left}px,${linkCoords.top}px`;
+      
+
+    }
+
+    triggers.forEach(a => a.addEventListener('mouseenter', highlightLink));
+
   </script>
 </body>
 </html>
