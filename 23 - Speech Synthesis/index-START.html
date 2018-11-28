@@ -11,16 +11,16 @@
     <div class="voiceinator">
 
       <h1>The Voiceinator 5000</h1>
-
+      <!-- Contains all the possible voices -->
       <select name="voice" id="voices">
         <option value="">Select A Voice</option>
       </select>
-
+      <!-- Contains all possible speeds for talking -->
       <label for="rate">Rate:</label>
       <input name="rate" type="range" min="0" max="3" value="1" step="0.1">
-
+      <!-- Contains all possible pitches  -->
       <label for="pitch">Pitch:</label>
-
+      <!-- Text area for synthesizing -->
       <input name="pitch" type="range" min="0" max="2" step="0.1">
       <textarea name="text">Hello! I love JavaScript 👍</textarea>
       <button id="stop">Stop!</button>
@@ -28,14 +28,7 @@
 
     </div>
 
-<script>
-  const msg = new SpeechSynthesisUtterance();
-  let voices = [];
-  const voicesDropdown = document.querySelector('[name="voice"]');
-  const options = document.querySelectorAll('[type="range"], [name="text"]');
-  const speakButton = document.querySelector('#speak');
-  const stopButton = document.querySelector('#stop');
-</script>
+<script src="scripts.js"></script>
 
 </body>
 </html>
