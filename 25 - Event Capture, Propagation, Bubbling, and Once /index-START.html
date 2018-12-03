@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
   <title>Understanding JavaScript's Capture</title>
 </head>
 <body class="bod">
@@ -13,35 +14,36 @@
     </div>
   </div>
 
-<style>
-  html {
-    box-sizing: border-box;
-  }
-  
-  *, *:before, *:after { 
-    box-sizing: inherit; 
-  }
-
-  div {
-    width: 100%;
-    padding: 100px;
-  }
-
-  .one {
-    background: thistle;
-  }
-
-  .two {
-    background: mistyrose;
-  }
-
-  .three {
-    background: coral;
-  }
-</style>
-
 <button></button>
+
+
 <script>
+
+const divs = document.querySelectorAll('div');
+
+function logText(e) {
+  console.log(this.classList.value);
+  // e.stopPropagation(); // stop bubbling - will not trigger events on the parents
+}
+
+
+// Will select ALL the divs because all the divs are nested in each other 
+// This is the concept of BUBBLING
+divs.forEach(div => div.addEventListener('click', logText, {
+  // capture will run the function on the way DOWN through the divs rather than ripple upwards
+  capture: false,
+  once: true // will listen to a click ONCE and UNBIND ITSELF so no future clicks will trigger
+}));
+
+// USE ONCE FOR STORE CHECKOUTS SO THEY CAN'T CHECKOUT MULTIPLE TIMES 
+button.addEventListener('click', () => {
+  console.log('Click');
+}, {
+  once: true
+})
+
+
+
 
 </script>
 </body>
